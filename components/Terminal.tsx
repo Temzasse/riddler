@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { WindupChildren, Pause, Pace } from "windups";
+import React, { useEffect, useRef, useState } from "react";
+import { useWindupString } from "windups";
 
 import { styled } from "@styles/styled";
 import { Stack, Text } from "./common";
@@ -9,12 +9,30 @@ type Props = {
   lines: string[];
 };
 
+type Line = {
+  id: string;
+  text: string;
+  respondent: "killer" | "user";
+};
+
 const factor = 1; // edit for easier testing
 const pace = 100 * factor;
 const delay = 2000 * factor;
 
-export default function Terminal({ onFinished, lines }: Props) {
+export default function Terminal({ onFinished, lines: initialLines }: Props) {
+  const [firstLine, ...otherLines] = useRef<Line[]>(
+    initialLines.map((text) => ({
+      id: generateId(),
+      respondent: "killer",
+      text,
+    }))
+  ).current;
+
   const [isVisible, setVisible] = useState(false);
+  const [lines, setLines] = useState([firstLine]);
+  const formRef = useRef<HTMLFormElement>(null);
+  const linesRemaining = useRef<Line[]>(otherLines);
+  const lineIndex = useRef(0);
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 2000);
@@ -22,35 +40,84 @@ export default function Terminal({ onFinished, lines }: Props) {
 
   if (!isVisible) return <Wrapper />;
 
+  function insertLine(line: Line) {
+    setLines((p) => insert(p, lineIndex.current + 1, line));
+    lineIndex.current = lineIndex.current + 1;
+  }
+
+  function handleNextLine() {
+    if (linesRemaining.current.length === 0) {
+      onFinished();
+      return;
+    }
+
+    setTimeout(() => {
+      insertLine(linesRemaining.current.shift());
+    }, delay);
+  }
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const values = Object.fromEntries(formData);
+    const line: Line = {
+      id: generateId(),
+      text: values.input as string,
+      respondent: "user",
+    };
+
+    insertLine(line);
+    formRef.current?.reset();
+  }
+
   return (
     <Wrapper>
-      <Content>
+      <TerminalContent>
         <Stack axis="y" spacing="small">
-          <WindupChildren onFinished={onFinished}>
-            <Pace ms={pace}>
-              {lines.map((line, i) => (
-                <Fragment key={i}>
-                  <TerminalLine>{line}</TerminalLine>
-                  <Pause ms={delay} />
-                </Fragment>
-              ))}
-            </Pace>
-          </WindupChildren>
+          {lines.map((line) => (
+            <TerminalLine
+              key={line.id}
+              onFinished={handleNextLine}
+              respondent={line.respondent}
+            >
+              {line.text}
+            </TerminalLine>
+          ))}
         </Stack>
-      </Content>
+      </TerminalContent>
 
-      <Footer>
+      <TerminalForm ref={formRef} onSubmit={handleSubmit}>
         <Stack axis="x" spacing="xsmall" align="center">
           <Cursor />
-          <Input
+          <TerminalInput
+            name="input"
             placeholder="Reply here..."
             autoCorrect="false"
             spellCheck="false"
           />
         </Stack>
-      </Footer>
+      </TerminalForm>
     </Wrapper>
   );
+}
+
+function TerminalLine({
+  children,
+  respondent,
+  onFinished,
+}: {
+  children: string;
+  respondent: "killer" | "user";
+  onFinished: () => void;
+}) {
+  const [windup] = useWindupString(children, {
+    pace: () => pace,
+    skipped: respondent === "user",
+    onFinished: respondent === "killer" ? onFinished : undefined,
+  });
+
+  return <TerminalText respondent={respondent}>{windup}</TerminalText>;
 }
 
 function Cursor() {
@@ -78,6 +145,17 @@ function Cursor() {
   );
 }
 
+function generateId() {
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
+}
+
+function insert(arr: any[], index: number, newItem: any) {
+  return [...arr.slice(0, index), newItem, ...arr.slice(index)];
+}
+
 const Wrapper = styled("div", {
   minWidth: 500,
   minHeight: 400,
@@ -88,32 +166,48 @@ const Wrapper = styled("div", {
   borderRadius: "$small",
 });
 
-const Content = styled("div", {
+const TerminalContent = styled("div", {
   flex: 1,
 });
 
-const TerminalLine = styled(Text, {
+const TerminalText = styled(Text, {
   position: "relative",
   display: "inline-block",
-  paddingLeft: "$normal",
+
   "&:before": {
-    content: "'>'",
     position: "absolute",
     left: 0,
     top: 0,
     color: "$text",
     typography: "$body",
   },
+
+  variants: {
+    respondent: {
+      killer: {
+        paddingLeft: "$normal",
+        "&:before": {
+          content: "'>'",
+        },
+      },
+      user: {
+        paddingLeft: "$xlarge",
+        "&:before": {
+          content: "'(you)'",
+        },
+      },
+    },
+  },
 });
 
-const Footer = styled("div", {});
+const TerminalForm = styled("form", {});
 
 const CursorSvg = styled("svg", {
   color: "$text",
   size: 40,
 });
 
-const Input = styled("input", {
+const TerminalInput = styled("input", {
   backgroundColor: "transparent",
   border: "none",
   outline: "none",

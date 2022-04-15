@@ -9,10 +9,10 @@ type Phase = "entry" | "intro" | "game";
 
 export default function Home() {
   const [playBackgroundSound] = useSound("/background.mp3");
-  const [phase, setPhase] = useState<Phase>("entry");
+  const [phase, setPhase] = useState<Phase>("intro");
 
   function handleEntry() {
-    playBackgroundSound();
+    // playBackgroundSound();
     setPhase("intro");
   }
 
