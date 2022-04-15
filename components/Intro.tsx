@@ -9,13 +9,13 @@ type Props = {
   onNext: () => void;
 };
 
-const lines = [
+const introLines = [
   "Hello",
   "I've been waiting for you",
   "I have some bad news for you",
-  "All your friends are dead",
+  "All your friends are... dead.",
   "They have been mysteriosly murdered...",
-  "...by me",
+  "...by me! :)",
 ];
 
 export default function Intro({ onNext }: Props) {
@@ -29,7 +29,10 @@ export default function Intro({ onNext }: Props) {
     >
       <Stack axis="y" spacing="large" align="center">
         <motion.div layout="position">
-          <Terminal lines={lines} onFinished={() => setFinished(true)} />
+          <Terminal
+            killerLineTexts={introLines}
+            onFinished={() => setFinished(true)}
+          />
         </motion.div>
 
         {isFinished && <Button onClick={onNext}>Ready to start?</Button>}

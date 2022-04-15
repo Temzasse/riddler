@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useWindupString } from "windups";
 
 import { styled } from "@styles/styled";
@@ -6,7 +6,7 @@ import { Stack, Text } from "./common";
 
 type Props = {
   onFinished: () => void;
-  lines: string[];
+  killerLineTexts: string[];
 };
 
 type Line = {
@@ -19,68 +19,39 @@ const factor = 1; // edit for easier testing
 const pace = 100 * factor;
 const delay = 2000 * factor;
 
-export default function Terminal({ onFinished, lines: initialLines }: Props) {
-  const [firstLine, ...otherLines] = useRef<Line[]>(
-    initialLines.map((text) => ({
-      id: generateId(),
-      respondent: "killer",
-      text,
-    }))
-  ).current;
-
+export default function Terminal({ onFinished, killerLineTexts }: Props) {
   const [isVisible, setVisible] = useState(false);
-  const [lines, setLines] = useState([firstLine]);
   const formRef = useRef<HTMLFormElement>(null);
-  const linesRemaining = useRef<Line[]>(otherLines);
-  const lineIndex = useRef(0);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const { lines, insertKillerLine, insertUserLine } = useTerminalLines({
+    killerLines: killerLineTexts,
+    onLastKillerLine: onFinished,
+  });
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 2000);
   }, []);
 
+  useLayoutEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTop = contentRef.current.scrollHeight;
+    }
+  }, [lines.length]);
+
   if (!isVisible) return <Wrapper />;
-
-  function insertLine(line: Line) {
-    lineIndex.current = lineIndex.current + 1;
-    setLines((p) => insert(p, lineIndex.current, line));
-  }
-
-  function handleNextKillerLine(lineId: string) {
-    if (linesRemaining.current.length === 0) {
-      onFinished();
-      return;
-    }
-
-    const killerLines = lines.filter((l) => l.respondent === "killer");
-    const latestKillerLine = killerLines[killerLines.length - 1];
-
-    if (latestKillerLine.id === lineId) {
-      setTimeout(() => {
-        insertLine(linesRemaining.current.shift());
-      }, delay);
-    }
-  }
 
   function handleSubmit(e: any) {
     e.preventDefault();
-
     const formData = new FormData(e.target);
     const values = Object.fromEntries(formData);
-    const line: Line = {
-      id: generateId(),
-      text: values.input as string,
-      respondent: "user",
-    };
-
-    insertLine(line);
-    insertLine(getReply(line.text));
-
+    insertUserLine(values.input as string);
     formRef.current?.reset();
   }
 
   return (
     <Wrapper>
-      <TerminalContent>
+      <TerminalContent ref={contentRef}>
         <Stack axis="y" spacing="small">
           {lines.map((line) => (
             <TerminalLine
@@ -88,7 +59,7 @@ export default function Terminal({ onFinished, lines: initialLines }: Props) {
               respondent={line.respondent}
               onFinished={
                 line.respondent === "killer"
-                  ? () => handleNextKillerLine(line.id)
+                  ? () => insertKillerLine(line.id)
                   : undefined
               }
             >
@@ -156,6 +127,58 @@ function Cursor() {
   );
 }
 
+function useTerminalLines({
+  killerLines,
+  onLastKillerLine,
+}: {
+  killerLines: string[];
+  onLastKillerLine: () => void;
+}) {
+  const [firstLine, ...otherLines] = useRef<Line[]>(
+    killerLines.map((text) => ({
+      id: generateId(),
+      respondent: "killer",
+      text,
+    }))
+  ).current;
+
+  const [lines, setLines] = useState([firstLine]);
+  const linesRemaining = useRef<Line[]>(otherLines);
+  const lineIndex = useRef(0);
+
+  function insertLine(line: Line) {
+    lineIndex.current = lineIndex.current + 1;
+    setLines((p) => insert(p, lineIndex.current, line));
+  }
+
+  function insertKillerLine(lineId: string) {
+    if (linesRemaining.current.length === 0) {
+      onLastKillerLine();
+      return;
+    }
+
+    const killerLines = lines.filter((l) => l.respondent === "killer");
+    const latestKillerLine = killerLines[killerLines.length - 1];
+
+    if (latestKillerLine.id === lineId) {
+      setTimeout(() => {
+        insertLine(linesRemaining.current.shift());
+      }, delay);
+    }
+  }
+
+  function insertUserLine(text: string) {
+    const line: Line = { id: generateId(), text, respondent: "user" };
+    insertLine(line);
+
+    if (linesRemaining.current.length > 0) {
+      insertLine(getReply(line.text));
+    }
+  }
+
+  return { lines, insertUserLine, insertKillerLine };
+}
+
 function generateId() {
   return (
     Math.random().toString(36).substring(2, 15) +
@@ -176,8 +199,8 @@ function getReply(text: string): Line {
 }
 
 const Wrapper = styled("div", {
-  minWidth: 500,
-  minHeight: 400,
+  minWidth: 600,
+  minHeight: 500,
   display: "flex",
   flexDirection: "column",
   padding: "$large",
@@ -188,6 +211,8 @@ const Wrapper = styled("div", {
 const TerminalContent = styled("div", {
   flex: 1,
   marginBottom: "$normal",
+  maxHeight: "65vh",
+  overflow: "auto",
 });
 
 const TerminalText = styled(Text, {
