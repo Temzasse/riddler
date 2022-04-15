@@ -41,19 +41,24 @@ export default function Terminal({ onFinished, lines: initialLines }: Props) {
   if (!isVisible) return <Wrapper />;
 
   function insertLine(line: Line) {
-    setLines((p) => insert(p, lineIndex.current + 1, line));
     lineIndex.current = lineIndex.current + 1;
+    setLines((p) => insert(p, lineIndex.current, line));
   }
 
-  function handleNextLine() {
+  function handleNextKillerLine(lineId: string) {
     if (linesRemaining.current.length === 0) {
       onFinished();
       return;
     }
 
-    setTimeout(() => {
-      insertLine(linesRemaining.current.shift());
-    }, delay);
+    const killerLines = lines.filter((l) => l.respondent === "killer");
+    const latestKillerLine = killerLines[killerLines.length - 1];
+
+    if (latestKillerLine.id === lineId) {
+      setTimeout(() => {
+        insertLine(linesRemaining.current.shift());
+      }, delay);
+    }
   }
 
   function handleSubmit(e: any) {
@@ -68,6 +73,8 @@ export default function Terminal({ onFinished, lines: initialLines }: Props) {
     };
 
     insertLine(line);
+    insertLine(getReply(line.text));
+
     formRef.current?.reset();
   }
 
@@ -78,8 +85,12 @@ export default function Terminal({ onFinished, lines: initialLines }: Props) {
           {lines.map((line) => (
             <TerminalLine
               key={line.id}
-              onFinished={handleNextLine}
               respondent={line.respondent}
+              onFinished={
+                line.respondent === "killer"
+                  ? () => handleNextKillerLine(line.id)
+                  : undefined
+              }
             >
               {line.text}
             </TerminalLine>
@@ -109,15 +120,15 @@ function TerminalLine({
 }: {
   children: string;
   respondent: "killer" | "user";
-  onFinished: () => void;
+  onFinished?: () => void;
 }) {
-  const [windup] = useWindupString(children, {
+  const [text] = useWindupString(children, {
     pace: () => pace,
     skipped: respondent === "user",
-    onFinished: respondent === "killer" ? onFinished : undefined,
+    onFinished,
   });
 
-  return <TerminalText respondent={respondent}>{windup}</TerminalText>;
+  return <TerminalText respondent={respondent}>{text}</TerminalText>;
 }
 
 function Cursor() {
@@ -156,6 +167,14 @@ function insert(arr: any[], index: number, newItem: any) {
   return [...arr.slice(0, index), newItem, ...arr.slice(index)];
 }
 
+function getReply(text: string): Line {
+  return {
+    id: generateId(),
+    respondent: "killer",
+    text: "Please don't interrupt me",
+  };
+}
+
 const Wrapper = styled("div", {
   minWidth: 500,
   minHeight: 400,
@@ -168,6 +187,7 @@ const Wrapper = styled("div", {
 
 const TerminalContent = styled("div", {
   flex: 1,
+  marginBottom: "$normal",
 });
 
 const TerminalText = styled(Text, {
