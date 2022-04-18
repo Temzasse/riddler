@@ -1,4 +1,5 @@
 import { createStitches } from "@stitches/react";
+import type * as Stitches from "@stitches/react";
 
 import {
   absoluteFill,
@@ -18,6 +19,7 @@ export const {
   getCssText,
   globalCss,
   styled,
+  keyframes,
   theme,
 } = createStitches({
   theme: {
@@ -26,6 +28,10 @@ export const {
       onPrimaryText: "#000",
       text: "#2db818",
       background: "#000",
+      caseFileBackgroundLight: "#d1bb89",
+      caseFileBackgroundDark: "#c1ab7a",
+      caseFileText: "#362f1d",
+      caseFileTextClassified: "#c43439",
     },
     fonts: {
       terminal: "'VT323', monospace",
@@ -72,3 +78,4 @@ export const {
 
 export type Theme = typeof theme;
 export type Color = keyof typeof theme["colors"];
+export type CSS = Stitches.CSS<typeof config>;

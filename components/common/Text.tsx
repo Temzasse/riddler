@@ -38,6 +38,7 @@ const StyledText = styled("p", {
     variant: {
       body: { typography: "$body" },
       bodySmall: { typography: "$bodySmall" },
+      caseFile: { typography: "$caseFile" },
       title1: { typography: "$title1" },
       title2: { typography: "$title2" },
       title3: { typography: "$title3" },

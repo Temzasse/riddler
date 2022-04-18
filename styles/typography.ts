@@ -3,6 +3,7 @@ import { CSSProperties } from "@stitches/react";
 export type TypographyVariant =
   | "body"
   | "bodySmall"
+  | "caseFile"
   | "button"
   | "title1"
   | "title2"
@@ -25,6 +26,12 @@ export const typographyVariants: {
     fontFamily: "$terminal",
     lineHeight: 1.4,
     fontSize: rem(16),
+    fontWeight: 400,
+  },
+  $caseFile: {
+    fontFamily: "$typewriter",
+    lineHeight: 1.5,
+    fontSize: rem(20),
     fontWeight: 400,
   },
   $title1: {
@@ -50,7 +57,7 @@ export const typographyVariants: {
     lineHeight: 1,
     fontSize: rem(24),
     fontWeight: 400,
-    letterSpacing: '1.5px',
+    letterSpacing: "1.5px",
     textTransform: "uppercase",
   },
 };

@@ -4,12 +4,13 @@ import useSound from "use-sound";
 
 import Entry from "@components/Entry";
 import Intro from "@components/Intro";
+import Cases from "@components/Cases";
 
-type Phase = "entry" | "intro" | "game";
+type Phase = "entry" | "intro" | "cases";
 
 export default function Home() {
   const [playBackgroundSound] = useSound("/background.mp3");
-  const [phase, setPhase] = useState<Phase>("intro");
+  const [phase, setPhase] = useState<Phase>("cases");
 
   function handleEntry() {
     // playBackgroundSound();
@@ -17,13 +18,14 @@ export default function Home() {
   }
 
   function handleIntro() {
-    setPhase("game");
+    setPhase("cases");
   }
 
   return (
     <AnimatePresence>
       {phase === "entry" && <Entry onNext={handleEntry} />}
       {phase === "intro" && <Intro onNext={handleIntro} />}
+      {phase === "cases" && <Cases />}
     </AnimatePresence>
   );
 }

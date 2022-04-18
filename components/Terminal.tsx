@@ -15,10 +15,6 @@ type Line = {
   respondent: "killer" | "user";
 };
 
-const factor = 1; // edit for easier testing
-const pace = 100 * factor;
-const delay = 2000 * factor;
-
 export default function Terminal({ onFinished, killerLineTexts }: Props) {
   const [isVisible, setVisible] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -39,8 +35,6 @@ export default function Terminal({ onFinished, killerLineTexts }: Props) {
     }
   }, [lines.length]);
 
-  if (!isVisible) return <Wrapper />;
-
   function handleSubmit(e: any) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -52,21 +46,23 @@ export default function Terminal({ onFinished, killerLineTexts }: Props) {
   return (
     <Wrapper>
       <TerminalContent ref={contentRef}>
-        <Stack axis="y" spacing="small">
-          {lines.map((line) => (
-            <TerminalLine
-              key={line.id}
-              respondent={line.respondent}
-              onFinished={
-                line.respondent === "killer"
-                  ? () => insertKillerLine(line.id)
-                  : undefined
-              }
-            >
-              {line.text}
-            </TerminalLine>
-          ))}
-        </Stack>
+        {isVisible && (
+          <Stack axis="y" spacing="small">
+            {lines.map((line) => (
+              <TerminalLine
+                key={line.id}
+                respondent={line.respondent}
+                onFinished={
+                  line.respondent === "killer"
+                    ? () => insertKillerLine(line.id)
+                    : undefined
+                }
+              >
+                {line.text}
+              </TerminalLine>
+            ))}
+          </Stack>
+        )}
       </TerminalContent>
 
       <TerminalForm ref={formRef} onSubmit={handleSubmit}>
@@ -83,6 +79,10 @@ export default function Terminal({ onFinished, killerLineTexts }: Props) {
     </Wrapper>
   );
 }
+
+const factor = 1; // edit for easier testing
+const pace = 100 * factor;
+const delay = 2000 * factor;
 
 function TerminalLine({
   children,
@@ -200,7 +200,7 @@ function getReply(text: string): Line {
 
 const Wrapper = styled("div", {
   minWidth: 600,
-  minHeight: 500,
+  height: "100%",
   display: "flex",
   flexDirection: "column",
   padding: "$large",
@@ -211,7 +211,8 @@ const Wrapper = styled("div", {
 const TerminalContent = styled("div", {
   flex: 1,
   marginBottom: "$normal",
-  maxHeight: "65vh",
+  minHeight: "60vh",
+  maxHeight: "60vh",
   overflow: "auto",
 });
 
