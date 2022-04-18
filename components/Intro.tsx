@@ -16,7 +16,10 @@ const introLines = [
   "All your friends are... dead.",
   "They have been mysteriosly murdered...",
   "...by me! :)",
+  "To gather your courage you need to drink a shot",
 ];
+
+// Maybe replace some text with another font
 
 export default function Intro({ onNext }: Props) {
   const [isFinished, setFinished] = useState(false);

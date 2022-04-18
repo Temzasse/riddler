@@ -1,15 +1,11 @@
 import React from "react";
 
 import { styled } from "@styles/styled";
+import { CaseInfo } from "./data";
 import { Stack, Text } from "./common";
-import { DialogContent, DialogTrigger } from "./Dialog";
+import { Dialog, DialogContent, DialogTrigger } from "./Dialog";
 import CaseFileInfo from "./CaseFileInfo";
-import Classified from "./Classified";
-
-export type CaseInfo = {
-  id: string;
-  name: string;
-};
+import Unsolved from "./Unsolved";
 
 type Props = {
   info: CaseInfo;
@@ -17,14 +13,14 @@ type Props = {
 
 export default function CaseFile({ info }: Props) {
   return (
-    <>
+    <Dialog>
       <DialogTrigger asChild>
         <Wrapper>
           <Stack axis="y" spacing="normal" align="center">
             <Text variant="caseFile" color="caseFileText">
               {info.name}
             </Text>
-            <Classified />
+            <Unsolved />
           </Stack>
         </Wrapper>
       </DialogTrigger>
@@ -32,7 +28,7 @@ export default function CaseFile({ info }: Props) {
       <DialogContent css={{ backgroundColor: "$caseFileBackgroundDark" }}>
         <CaseFileInfo info={info} />
       </DialogContent>
-    </>
+    </Dialog>
   );
 }
 

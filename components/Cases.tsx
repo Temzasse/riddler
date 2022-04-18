@@ -2,32 +2,17 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import { styled } from "@styles/styled";
+import { cases } from "./data";
 import { Stack } from "./common";
-import { Dialog } from "./Dialog";
 import CaseFile from "./CaseFile";
 import Terminal from "./Terminal";
 
 type Props = {};
 
-const cases = [
-  { id: "1", name: "Jopu" },
-  { id: "2", name: "Jaakko" },
-  { id: "3", name: "Ode" },
-  { id: "4", name: "Meris" },
-  { id: "5", name: "Lalli" },
-  { id: "6", name: "Henu" },
-  { id: "7", name: "Andreas" },
-  { id: "8", name: "Eeki" },
-  { id: "9", name: "Tasse" },
-];
-
 const casesLines = [
-  "Hello",
-  "I've been waiting for you",
-  "I have some bad news for you",
-  "All your friends are... dead.",
-  "They have been mysteriosly murdered...",
-  "...by me! :)",
+  "Are you as excited as I am?",
+  "Here on the left you have all the cases you need to solve",
+  "Each of them contains redacted information",
 ];
 
 export default function Cases({}: Props) {
@@ -40,9 +25,7 @@ export default function Cases({}: Props) {
       <Stack axis="x" spacing="xxlarge">
         <CasesGrid>
           {cases.map((caseInfo) => (
-            <Dialog key={caseInfo.id}>
-              <CaseFile info={caseInfo} />
-            </Dialog>
+            <CaseFile key={caseInfo.id} info={caseInfo} />
           ))}
         </CasesGrid>
 

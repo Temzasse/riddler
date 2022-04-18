@@ -4,6 +4,7 @@ export type TypographyVariant =
   | "body"
   | "bodySmall"
   | "caseFile"
+  | "caseFileTitle"
   | "button"
   | "title1"
   | "title2"
@@ -33,6 +34,12 @@ export const typographyVariants: {
     lineHeight: 1.5,
     fontSize: rem(20),
     fontWeight: 400,
+  },
+  $caseFileTitle: {
+    fontFamily: "$typewriter",
+    lineHeight: 1.5,
+    fontSize: rem(24),
+    fontWeight: 700,
   },
   $title1: {
     fontFamily: "$terminal",

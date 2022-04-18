@@ -81,7 +81,7 @@ export default function Terminal({ onFinished, killerLineTexts }: Props) {
 }
 
 const factor = 1; // edit for easier testing
-const pace = 100 * factor;
+const pace = 80 * factor;
 const delay = 2000 * factor;
 
 function TerminalLine({
@@ -199,7 +199,7 @@ function getReply(text: string): Line {
 }
 
 const Wrapper = styled("div", {
-  minWidth: 600,
+  width: 650,
   height: "100%",
   display: "flex",
   flexDirection: "column",
