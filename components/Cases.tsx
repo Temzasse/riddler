@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 
 import { styled } from "@styles/styled";
-import { cases } from "./data";
+import { CaseId } from "./data";
+import { useCases, useKnownWords } from "./hooks";
 import { Stack } from "./common";
 import CaseFile from "./CaseFile";
-import Terminal from "./Terminal";
+import Terminal, { TerminalRef } from "./Terminal";
 
 type Props = {};
 
@@ -16,6 +17,24 @@ const casesLines = [
 ];
 
 export default function Cases({}: Props) {
+  const { cases, revealHint } = useCases();
+  const { knownWords, removeKnownWord } = useKnownWords();
+  const terminalRef = useRef<TerminalRef>();
+
+  console.log({ knownWords, cases });
+
+  function handleUserLineInsert(line: string) {
+    const [id, word] = line.split("=");
+
+    if (id && word && knownWords.includes(word)) {
+      revealHint(id as CaseId);
+      removeKnownWord(word);
+      terminalRef.current?.reply("Very well done!");
+    } else {
+      terminalRef.current?.reply("I'm not impressed");
+    }
+  }
+
   return (
     <Wrapper
       initial={{ opacity: 0 }}
@@ -30,7 +49,11 @@ export default function Cases({}: Props) {
         </CasesGrid>
 
         <TerminalWrapper>
-          <Terminal killerLineTexts={casesLines} onFinished={() => {}} />
+          <Terminal
+            ref={terminalRef}
+            killerLines={casesLines}
+            onUserLineInserted={handleUserLineInsert}
+          />
         </TerminalWrapper>
       </Stack>
     </Wrapper>

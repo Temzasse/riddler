@@ -10,17 +10,36 @@ import odeImg from "../assets/ode_case.jpg";
 import henuImg from "../assets/henu_case.jpg";
 import andreasImg from "../assets/andreas_case.jpg";
 
+export type CaseId =
+  | "lalli"
+  | "tasse"
+  | "eeki"
+  | "jopu"
+  | "jaakko"
+  | "meris"
+  | "ode"
+  | "henu"
+  | "andreas";
+
 export type CaseInfo = {
-  id: string;
+  id: CaseId;
   name: string;
   img: StaticImageData;
   details: Array<{ label: string; value: string }>;
   hints: string[];
 };
 
+export type Line = {
+  id: string;
+  text: string;
+  respondent: "killer" | "user";
+};
+
+export const knownWords = ["a", "b", "c", "d"];
+
 export const cases: CaseInfo[] = [
   {
-    id: "1",
+    id: "jopu",
     img: jopuImg,
     name: "Jopu",
     details: [
@@ -35,7 +54,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "2",
+    id: "jaakko",
     img: jaakkoImg,
     name: "Jaakko",
     details: [
@@ -50,7 +69,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "3",
+    id: "ode",
     img: odeImg,
     name: "Ode",
     details: [
@@ -65,7 +84,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "4",
+    id: "meris",
     img: merisImg,
     name: "Meris",
     details: [
@@ -80,7 +99,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "5",
+    id: "lalli",
     img: lalliImg,
     name: "Lalli",
     details: [
@@ -95,7 +114,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "6",
+    id: "henu",
     img: henuImg,
     name: "Henu",
     details: [
@@ -110,7 +129,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "7",
+    id: "andreas",
     img: andreasImg,
     name: "Andreas",
     details: [
@@ -125,7 +144,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "8",
+    id: "eeki",
     img: eekiImg,
     name: "Eeki",
     details: [
@@ -140,7 +159,7 @@ export const cases: CaseInfo[] = [
     ],
   },
   {
-    id: "9",
+    id: "tasse",
     img: teemuImg,
     name: "Tasse",
     details: [
@@ -248,66 +267,4 @@ J7?J777?7?J?J7~??J777J77J7J~~?7~!77!?7!!!77!?7JJ?!7JJJJY?!J7!?7!!~^^~!~~~~^^~!!~
 J?77777!J?777??7!?7!?77?J77!?!~J7!7?!!77?J7?J?!?7?!7!J577?7?77!~~!~^~::^^^^^^^::::::.:::^:~~YJJ77!JB5?JYPGGG5Y!!!7JJ7J7?J77??~?7?7Y!J!7!7!?7?J7!7?YP!!77???7~7!?^7!77J7J?!?77?~J??7!?!J?!?7Y7J??7J?JJJ??
 JY?!7??J77J!?J?7??777?JJ7?!??777!777!??7?777777~7J?!7~7J7J?!!777~!~~~^:::^::::::........:!!?7Y!7!7!?7??5GGGPJY?~?GJJ5?7!J!!?Y!!??7J7?!7~?777??7?JJ!J7?7!JJ7!~7?7!7!7!?!7J~7!7J!777J!777Y7?!J?J7??JJ?JYJ?
 ??!?7~!??777J!~???!!~!~777!J!JJ~7~77~~!!J?7!?!7!77777?7?7!?7J!77!7~^:^!~::.:::.......::.~!77?J?!?J???J7JPPP5?7Y~7?!?!!!!7!~7Y77J?77J!!!Y?7~777!?7Y!?777!777^~77!!!~7777~?77!~7~!?!77~77?777777?7??7?7JJ?
-`
-
-export const asciiAnna1 = `
-                                                                                                                        
-                                                 .:~~!!!!!~~7777777!~~^:::.                                             
-                                             :~7JYJJ?JJYY?!JJ?YYJJ?77777777!~:.                                         
-                                         :!7??J?!~!!77?J7~^7!!??77????J??J7!~~~~.                                       
-                                       .?J?!~!7??J?????J?77JJJYPY?YP5PPY?77!^:::^:.                                     
-                                    .~!?JYJJYY55P55P5YYYJJJPBPGB5J??PJYY7?Y~:::::::::.                                  
-                                  :?5Y?7?Y5PP555555PP5GGPPJJGBJ???~^!~!7?JJ~::^^^^::::..                                
-                                ^5PYJJYY5PPYJJY5PP5555Y5PPP5JJ??P7^~~^^~~!~~^~~~~^^:::^~~.                              
-                              ~?PG5YY5GGG5J?Y555YY5555PPGP5P5JJJY?!~^^^^^~^^^~~~!~~^^^^:^~:.                            
-                           ~?JY5BGYY5PBBP55P5YJJJPGGGPGGP5JJPP5YYJ?7!~~^~!??7!~~~~^^^^::::::^^.                         
-                         7PPP55PG5YY5GPYJYGGPJ?J5PGBBGGGPPPPGGYJJJJYJ77??JYY?!~~^:::::::.:::::^7!:                      
-                       ^PBP5PY555YY5GG5JJY5PPJ7JYY5PGGGBGPPGGP5YJ??J55Y5PG5JJ7!~^:::::..::.::^:^7PJ                     
-                     .?PPP55PPPGP55PPGG5JJY5GPY5PPPPPGGBG5555PGGBP55JJJJJJJJYJ?77!^:::....::^^^^^~J7                    
-                    :5P5PP55PGBB#BBBBBBGGGGPGGGGBGGGPPPPP5YYYY55PGGPYJ??JYYYYPP5J?!!~^^^^::^^::::^!JJ                   
-                    7JY5PPGP5PGB#&&&&&&#####&&&&&&&&&&&&#BGP555PPPGGGP55YYYYYYY5YYJ7~^^^::::::::::~?J!                  
-                    !YY5PPPPPGBB###&&&&&&&&@@@@@@@@@@@@@&&&#BGPPPPPPPP5P555YYJJJY5YJ?7!^^^^^^^^^::~JJJ^                 
-                    ^555PPPPGB###BB##&&&&@@@@@@@@@@@@@@&&&&&&##BBBBBBBBBGGP5YJ??77????77!^^^^^^^:^^!?J7                 
-                    ~55P55PGB##BPGB#&&&@@@@@@@@@@@@@@@@@&&&&&&&&&#&&&#####BGGPYJ777!!!!~~~^^^:::::^~!?~                 
-                    Y55JY5PB##G5G#&&&&&@@@@@@@@@@@@@@@&&&&&&&&&&&&&&&#####BBBGP5YJ?77?7!~^^^^^::::::^~^                 
-                   ~GG5JY5PBG5PG#&&&&@@@@@@@@@@@@@@@&&&&&&&&&&&&&&&&&####BBGGPP5YJJ7!!!~^^^^:::::::::::                 
-                   !BGYJJPPPPGB#&&&&@@&@@@@@@@@@@&&&&&&&&&&&&&&&#&&####BBBGP5YJJ???77!~~^^^^:::........                 
-                   :GGYYPGG#BB#&&&&&&@@@@@@@@@@@&&&&&&&&&&&&&&#######BBGGPP5Y???77777!!~^^^^^^::......                  
-                   .BBPPPPGBB#&&&&&@@@@@@@@@@@@@&&&&&&&&&&&&&#######BBGGP5YJ???777777!!!~^^^:::......                   
-                   ^GG5J5GBB#&&&&@@@@@@@@@@@@@@@@@@@@&&&&&&&&&######BBBGGP5Y??77777777!!~~^::::.....                    
-                   JPPYYPG##&&&@@@@@@@@@@@@@@@@@@@@@@&&&&&&&&&&&#####BBBBGPYYJ??777777!!!~^:::.......                   
-                  ?PPP5Y5B&&&@@@@@@@@@@@@@@@@@@@@&&&&&&&&&#######&####BBBGPPPP5J??77777!!~^::......                     
-                 .YB&&GJ5B&&@@@@@@@&&&&&&&&&&&&&&&&&&&##############BBBBBBBBGGP5YJ?7777!!!~^:......                     
-                 :P#B#GYP#&&@@@@&&&&&&&#BGP55PPGGBB##BBBBB##BBBBBBBGBBBBGGGPP5YYJJ??777!!!~~^...                        
-                 7BBP#BGG&&@@@@&&&&&&&&&&#BG5YYYYY5PGGGBBBBGGGGPPP55YJ???????77777!!777!!!!~^:.                         
-                 J&G&@&BB&@@@@&&&&&#BBGP555JJJ?JJY5Y55PBBBBGP5YYJ?777!!!!!77???????7!!!!!!!!^..    .:.                  
-                 5##@@&#&&&@@&&&&BPJ7~~!~::.::^~!7JYY5GB##BG5J???7!!!~~~~~~~~!777????77!!!!!^.    .^~~.                 
-                 5&&@&BG&&@@@@&&&##BBBBBB5J77777~^^7JP#&&&&#GY?7!!~^:.... .....:~!!77777!!!!^..  .:^^^.                 
-                 ^&@&#GG&@@@@@@@@@@@@@&&&#BGP5YJ?77YG&&@@@@&B57!^:...::........  .^~~!!7!!!!~:..:^^^:^.                 
-                  P@&&GG&@@@@@@@@@@@@&&#BGGP5Y55PGB&@@@@@@@&#Y7~~^:^^^^~~~^~~^^^::^^~~!!777!~::^^^^^^^.                 
-                  ^&&&&&&&@@@@@@@@@@@@&&&&&####&&&@@@@@@@@@&BJ7!!!~~~!!!777777!!!7777777777!~^::^~~^^.                  
-                   G@&&@&&@@@@@@@@@@@@&&&&&&&@@@@@@@@@@@@@&&GJ?777777?JY5PPPPPP555YJ?????77!~^::^~~^:                   
-                   ^#&&@&&@@@@@@@@@@@@@@&&@@@@@@@@@@@@@@@@&#GJ?77??JP#&&&&&&&&&###BG5J??777!~^..:~~^                    
-                    7&@@&&&@@@@@@@@@@@@@@@&&&&@@@@@@@@@@@@&#PJ?????JB&&&&&&&&&&###BG5J??77!!~^::~~~.                    
-                     .?#@&&@@@@@@@@@@@@@@&&&&##BB&&@@@@@@@&#BPJ?777?5B##&&&&&###BGG5JJ??77!~^^~~~^.                     
-                        Y&&&&@@@@@@&&&&&&##BG5Y5#&@@@@@@@&&#BGY?7!!!?P########BBGP5Y????7!!~~!!~^.                      
-                        .&&&&&&&&&&&&&&#BG5YYJJG&&&&&&&&&#BGPY????!~!7PB###BBBGPP5JJ??777!~~~!!^.                       
-                         B&&&&&&&&&&&#BG5YJJYG&&&#PJJ5GBPYJ?7777??7!!!?5BBBGGPP5YJJ??777!!~~~^:                         
-                         7&&&&#&&###BGPYJJ?5#&@@@@&#G555YJ7!!~~~~~~~!!7?YPGG5YJJJ???777!!~..                            
-                         .&&&######GPYJJJJG&&@@@@@@@@&B5YJ7!!!~~~~!!!!777?YYJJ?????777!!!:                              
-                          &&&&#&&#BPJ?JY5G&&&&@@@@@@&&BB##GY?7!!!!!77777!77?????77777!!~~                               
-                          P&&&&&&#BPJ?JY5PB&&&&&&&&&&&#&&&#G5?7777777777!!!77??777!!!!~~:                               
-                          ^&&&&&&##G5JJJ??J5GBBBBBBGGGGG5Y?77!!!777777!!!!!!7?777!!!!!~^                                
-                           7&&&&###BPY5GB#&&&####BGP55Y?!~^^^^^^^^~~^^^~~!!!??77!!!7!~~:                                
-                            5&#####BGGB&&&&@&&#####BGP5YJJ??!~^^^^^^^^^~!!7??77!!!!!!~:                                 
-                            .P#######B#&&&&&&&&&#BGPP555YJJ?7~~~~~~~!!!!!!7?77!!!!!!~^                                  
-                              !B######&&&&&&&&&&&#BGP5YYJ?7!!!777777!!!!!777!!!!!!!~^                                   
-                               .5###&&&&&&&&&&&#BG5YYJJJJJ???7777777!!!!!!!!!!!!!~~:                                    
-                                 ~###&&&&&&&&&&##BGP5Y??77777777777!77!!!!!!!!!!~^:                                     
-                                  B&###&&&&&&&&&&&&&#BBG5YJ?7777777777!!!!!!!~~^^:                                      
-                                  Y@&&###&&&&&&&&&&&&###BBG5J77777777!!!~!~~~~^^^.                                      
-                                  !@&&&&#B#####&&&&###BBGPYJ?777777!!!!!!!~~~~^^^                                       
-                                  ^@&&&&&&##BGGBBBBBBGP5J??777777777!!!!~~~~~~^^:                                       
-                                  ^&&&&&&&&&&#GP55555JJ????????7?7!!!!~~~~~~~~^::                                       
-                                  ^&&&&&&&&&&&#B5YYJJJJ???????777!!!!!~!~~~~~~^::.                                      
 `;

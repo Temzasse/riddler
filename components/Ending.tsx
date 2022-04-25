@@ -34,7 +34,7 @@ export default function Ending() {
         <Ascii>{asciiAnna}</Ascii>
 
         <TerminalWrapper>
-          <Terminal killerLineTexts={endingLines} onFinished={() => {}} />
+          <Terminal killerLines={endingLines} />
         </TerminalWrapper>
       </Stack>
 
@@ -51,17 +51,15 @@ const Wrapper = styled(motion.div, {
 });
 
 const Ascii = styled("div", {
-  flex: 2,
   whiteSpace: "pre",
-  fontSize: 10,
+  fontSize: 7,
   fontFamily: "monospace",
   color: "$text",
   alignSelf: "flex-end",
-  paddingLeft: "$xxlarge",
 });
 
 const TerminalWrapper = styled("div", {
-  flex: 3,
+  flex: 1,
   flexCenter: "column",
   padding: "$xlarge",
 });

@@ -4,7 +4,8 @@ import { styled } from "@styles/styled";
 import { Text } from "./common";
 
 export default function RedactedText({ children }: { children: string }) {
-  const [match] = children.match(/\[(.*?)\]/g);
+  const m = children.match(/\[(.*?)\]/g);
+  const match = m ? m[0] : "";
   const redacted = children.replace(
     match,
     Array.from({ length: match.length - 2 })

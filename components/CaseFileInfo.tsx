@@ -26,7 +26,7 @@ export default function CaseFileInfo({ info }: Props) {
 
             <InfoSection axis="y" spacing="none">
               {info.details.map((detail) => (
-                <InfoRow axis="x" spacing="small">
+                <InfoRow key={detail.label} axis="x" spacing="small">
                   <Text variant="caseFile" color="caseFileText">
                     {detail.label}:
                   </Text>
@@ -45,8 +45,8 @@ export default function CaseFileInfo({ info }: Props) {
 
             <InfoSection axis="y" spacing="none">
               {info.hints.map((hint) => (
-                <InfoRow axis="x" spacing="small">
-                  <RedactedText key={hint}>{hint}</RedactedText>
+                <InfoRow key={hint} axis="x" spacing="small">
+                  <RedactedText>{hint}</RedactedText>
                 </InfoRow>
               ))}
             </InfoSection>

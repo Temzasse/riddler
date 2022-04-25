@@ -1,86 +1,107 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+
 import { useWindupString } from "windups";
 
 import { styled } from "@styles/styled";
 import { Stack, Text } from "./common";
+import { Line } from "./data";
 
 type Props = {
-  onFinished: () => void;
-  killerLineTexts: string[];
+  killerLines: string[];
+  onKillerLinesFinished?: () => void;
+  onUserLineInserted?: (line: string) => void;
 };
 
-type Line = {
-  id: string;
-  text: string;
-  respondent: "killer" | "user";
+export type TerminalRef = {
+  reply: (text: string) => void;
 };
 
-export default function Terminal({ onFinished, killerLineTexts }: Props) {
-  const [isVisible, setVisible] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+const Terminal = forwardRef(
+  (
+    { killerLines, onKillerLinesFinished, onUserLineInserted }: Props,
+    ref: any
+  ) => {
+    const [isVisible, setVisible] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
-  const { lines, insertKillerLine, insertUserLine } = useTerminalLines({
-    killerLines: killerLineTexts,
-    onLastKillerLine: onFinished,
-  });
+    const terminal = useTerminal({
+      killerLines,
+      onKillerLinesFinished,
+    });
 
-  useEffect(() => {
-    setTimeout(() => setVisible(true), 2000);
-  }, []);
+    function handleSubmit(e: any) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const values = Object.fromEntries(formData);
+      const line = values.input as string;
 
-  useLayoutEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.scrollTop = contentRef.current.scrollHeight;
+      if (line) {
+        terminal.insertUserLine(line);
+        formRef.current?.reset();
+        onUserLineInserted?.(line);
+      }
     }
-  }, [lines.length]);
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const values = Object.fromEntries(formData);
-    insertUserLine(values.input as string);
-    formRef.current?.reset();
-  }
+    useImperativeHandle(ref, () => ({
+      reply: (text: string) => terminal.insertKillerLine(text),
+    }));
 
-  return (
-    <Wrapper>
-      <TerminalContent ref={contentRef}>
-        {isVisible && (
-          <Stack axis="y" spacing="small">
-            {lines.map((line) => (
-              <TerminalLine
-                key={line.id}
-                respondent={line.respondent}
-                onFinished={
-                  line.respondent === "killer"
-                    ? () => insertKillerLine(line.id)
-                    : undefined
-                }
-              >
-                {line.text}
-              </TerminalLine>
-            ))}
+    useEffect(() => {
+      setTimeout(() => setVisible(true), 2000);
+    }, []);
+
+    useEffect(() => {
+      if (contentRef.current) {
+        contentRef.current.scrollTop = contentRef.current.scrollHeight;
+      }
+    }, [terminal.lines.length]);
+
+    return (
+      <Wrapper>
+        <TerminalContent ref={contentRef}>
+          {isVisible && (
+            <Stack axis="y" spacing="small">
+              {terminal.lines.map((line) => (
+                <TerminalLine
+                  key={line.id}
+                  respondent={line.respondent}
+                  onFinished={
+                    line.respondent === "killer"
+                      ? () => terminal.insertNextKillerLine(line.id)
+                      : undefined
+                  }
+                >
+                  {line.text}
+                </TerminalLine>
+              ))}
+            </Stack>
+          )}
+        </TerminalContent>
+
+        <TerminalForm ref={formRef} onSubmit={handleSubmit}>
+          <Stack axis="x" spacing="xsmall" align="center">
+            <Cursor />
+            <TerminalInput
+              name="input"
+              placeholder="Reply here..."
+              autoCorrect="false"
+              spellCheck="false"
+            />
           </Stack>
-        )}
-      </TerminalContent>
+        </TerminalForm>
+      </Wrapper>
+    );
+  }
+);
 
-      <TerminalForm ref={formRef} onSubmit={handleSubmit}>
-        <Stack axis="x" spacing="xsmall" align="center">
-          <Cursor />
-          <TerminalInput
-            name="input"
-            placeholder="Reply here..."
-            autoCorrect="false"
-            spellCheck="false"
-          />
-        </Stack>
-      </TerminalForm>
-    </Wrapper>
-  );
-}
-
-const factor = 1; // edit for easier testing
+const factor = 0.5; // edit for easier testing
 const pace = 80 * factor;
 const delay = 2000 * factor;
 
@@ -127,12 +148,12 @@ function Cursor() {
   );
 }
 
-function useTerminalLines({
+function useTerminal({
   killerLines,
-  onLastKillerLine,
+  onKillerLinesFinished,
 }: {
   killerLines: string[];
-  onLastKillerLine: () => void;
+  onKillerLinesFinished: () => void;
 }) {
   const [firstLine, ...otherLines] = useRef<Line[]>(
     killerLines.map((text) => ({
@@ -151,9 +172,27 @@ function useTerminalLines({
     setLines((p) => insert(p, lineIndex.current, line));
   }
 
-  function insertKillerLine(lineId: string) {
+  function insertUserLine(text: string) {
+    const line: Line = { id: generateId(), text, respondent: "user" };
+    insertLine(line);
+
+    if (linesRemaining.current.length > 0) {
+      insertLine({
+        id: generateId(),
+        respondent: "killer",
+        text: "Please don't interrupt me",
+      });
+    }
+  }
+
+  function insertKillerLine(text: string) {
+    const line: Line = { id: generateId(), text, respondent: "killer" };
+    insertLine(line);
+  }
+
+  function insertNextKillerLine(lineId: string) {
     if (linesRemaining.current.length === 0) {
-      onLastKillerLine();
+      onKillerLinesFinished?.();
       return;
     }
 
@@ -162,21 +201,13 @@ function useTerminalLines({
 
     if (latestKillerLine.id === lineId) {
       setTimeout(() => {
-        insertLine(linesRemaining.current.shift());
+        const line = linesRemaining.current.shift();
+        if (line) insertLine(line);
       }, delay);
     }
   }
 
-  function insertUserLine(text: string) {
-    const line: Line = { id: generateId(), text, respondent: "user" };
-    insertLine(line);
-
-    if (linesRemaining.current.length > 0) {
-      insertLine(getReply(line.text));
-    }
-  }
-
-  return { lines, insertUserLine, insertKillerLine };
+  return { lines, insertUserLine, insertKillerLine, insertNextKillerLine };
 }
 
 function generateId() {
@@ -188,14 +219,6 @@ function generateId() {
 
 function insert(arr: any[], index: number, newItem: any) {
   return [...arr.slice(0, index), newItem, ...arr.slice(index)];
-}
-
-function getReply(text: string): Line {
-  return {
-    id: generateId(),
-    respondent: "killer",
-    text: "Please don't interrupt me",
-  };
 }
 
 const Wrapper = styled("div", {
@@ -267,3 +290,5 @@ const TerminalInput = styled("input", {
     color: "$background",
   },
 });
+
+export default Terminal;

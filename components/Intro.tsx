@@ -19,8 +19,6 @@ const introLines = [
   "To gather your courage you need to drink a shot",
 ];
 
-// Maybe replace some text with another font
-
 export default function Intro({ onNext }: Props) {
   const [isFinished, setFinished] = useState(false);
 
@@ -33,8 +31,8 @@ export default function Intro({ onNext }: Props) {
       <Stack axis="y" spacing="large" align="center">
         <motion.div layout="position">
           <Terminal
-            killerLineTexts={introLines}
-            onFinished={() => setFinished(true)}
+            killerLines={introLines}
+            onKillerLinesFinished={() => setFinished(true)}
           />
         </motion.div>
 
