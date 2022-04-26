@@ -8,6 +8,18 @@ import odeImg from "../assets/ode_case.jpg";
 import henuImg from "../assets/henu_case.jpg";
 import andreasImg from "../assets/andreas_case.jpg";
 
+export const images: string[] = [
+  lalliImg,
+  teemuImg,
+  eekiImg,
+  jopuImg,
+  jaakkoImg,
+  merisImg,
+  odeImg,
+  henuImg,
+  andreasImg,
+];
+
 export type CaseId =
   | "lalli"
   | "tasse"

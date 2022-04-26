@@ -68,16 +68,20 @@ export default function Cases({ onNext }: Props) {
 
 const Wrapper = styled(motion.div, {
   flex: 1,
-  padding: "$xxxlarge",
 });
 
 const CasesGrid = styled("div", {
   flex: 1,
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
   gap: "$large",
+  paddingLeft: "$xxxlarge",
+  paddingVertical: "$xxxlarge",
 });
 
 const TerminalWrapper = styled("div", {
   flexCenter: "column",
+  maxHeight: "100vh",
+  paddingVertical: "$xxxlarge",
+  paddingRight: "$xxxlarge",
 });

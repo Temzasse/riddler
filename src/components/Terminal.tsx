@@ -1,6 +1,6 @@
 import { useWindupString } from "windups";
 
-import React, {
+import {
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -21,6 +21,10 @@ type Props = {
 export type TerminalRef = {
   reply: (text: string) => void;
 };
+
+const FACTOR = 1; // edit for easier testing
+const PACE = 70 * FACTOR;
+const DELAY = 1500 * FACTOR;
 
 const Terminal = forwardRef(
   (
@@ -54,7 +58,7 @@ const Terminal = forwardRef(
     }));
 
     useEffect(() => {
-      setTimeout(() => setVisible(true), 2000);
+      setTimeout(() => setVisible(true), 1000);
     }, []);
 
     useEffect(() => {
@@ -104,10 +108,6 @@ const Terminal = forwardRef(
   }
 );
 
-const factor = 1; // edit for easier testing
-const pace = 80 * factor;
-const delay = 2000 * factor;
-
 function TerminalLine({
   children,
   respondent,
@@ -118,7 +118,7 @@ function TerminalLine({
   onFinished?: () => void;
 }) {
   const [text] = useWindupString(children, {
-    pace: () => pace,
+    pace: () => PACE,
     skipped: respondent === "user",
     onFinished,
   });
@@ -206,7 +206,7 @@ function useTerminal({
       setTimeout(() => {
         const line = linesRemaining.current.shift();
         if (line) insertLine(line);
-      }, delay);
+      }, DELAY);
     }
   }
 
@@ -225,8 +225,8 @@ function insert(arr: any[], index: number, newItem: any) {
 }
 
 const Wrapper = styled("div", {
-  width: 650,
-  height: "100%",
+  width: "650px",
+  minHeight: "700px",
   display: "flex",
   flexDirection: "column",
   padding: "$large",

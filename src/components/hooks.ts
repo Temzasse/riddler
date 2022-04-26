@@ -18,6 +18,7 @@ window.resetGame = () => {
   localStorage.removeItem(PHASE_KEY);
   localStorage.removeItem(WORDS_KEY);
   localStorage.removeItem(CASES_KEY);
+  window.location.reload();
 };
 
 export function usePhases() {
@@ -59,7 +60,7 @@ export function useCases() {
 }
 
 export function useKnownWords() {
-  const [persistedValue, setPersistedValue] = useLocalStorage("WORDS_KEY", initialKnownWords); // prettier-ignore
+  const [persistedValue, setPersistedValue] = useLocalStorage(WORDS_KEY, initialKnownWords); // prettier-ignore
   const [knownWords, setKnownWords] = useImmer(persistedValue!);
 
   function removeKnownWord(word: string) {
