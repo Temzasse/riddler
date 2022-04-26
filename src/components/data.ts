@@ -1,24 +1,4 @@
-import lalliImg from "../assets/lalli_case.jpg";
-import teemuImg from "../assets/teemu_case.jpg";
-import eekiImg from "../assets/eeki_case.jpg";
-import jopuImg from "../assets/jopu_case.jpg";
-import jaakkoImg from "../assets/jaakko_case.jpg";
-import merisImg from "../assets/meris_case.jpg";
-import odeImg from "../assets/ode_case.jpg";
-import henuImg from "../assets/henu_case.jpg";
-import andreasImg from "../assets/andreas_case.jpg";
-
-export const images: string[] = [
-  lalliImg,
-  teemuImg,
-  eekiImg,
-  jopuImg,
-  jaakkoImg,
-  merisImg,
-  odeImg,
-  henuImg,
-  andreasImg,
-];
+import { images } from "./images";
 
 export type CaseId =
   | "lalli"
@@ -52,7 +32,7 @@ export const knownWords = ["a", "b", "c", "d"];
 export const cases: CaseInfo[] = [
   {
     id: "jopu",
-    img: jopuImg,
+    img: images.jopu,
     name: "Jopu",
     details: [
       { label: "Name", value: "Joel Lappalainen" },
@@ -67,7 +47,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "jaakko",
-    img: jaakkoImg,
+    img: images.jaakko,
     name: "Jaakko",
     details: [
       { label: "Name", value: "Jaakko Kallio" },
@@ -82,7 +62,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "ode",
-    img: odeImg,
+    img: images.ode,
     name: "Ode",
     details: [
       { label: "Name", value: "Oskar Loisamo" },
@@ -97,7 +77,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "meris",
-    img: merisImg,
+    img: images.meris,
     name: "Meris",
     details: [
       { label: "Name", value: "Teemu Meriluoto" },
@@ -112,7 +92,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "lalli",
-    img: lalliImg,
+    img: images.lalli,
     name: "Lalli",
     details: [
       { label: "Name", value: "Lalli Myllyaho" },
@@ -127,7 +107,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "henu",
-    img: henuImg,
+    img: images.henu,
     name: "Henu",
     details: [
       { label: "Name", value: "Henri Höytiä" },
@@ -142,7 +122,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "andreas",
-    img: andreasImg,
+    img: images.andreas,
     name: "Andreas",
     details: [
       { label: "Name", value: "Andreas Urbanski" },
@@ -157,7 +137,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "eeki",
-    img: eekiImg,
+    img: images.eeki,
     name: "Eeki",
     details: [
       { label: "Name", value: "Eerikki Pihlajamaa" },
@@ -172,7 +152,7 @@ export const cases: CaseInfo[] = [
   },
   {
     id: "tasse",
-    img: teemuImg,
+    img: images.teemu,
     name: "Tasse",
     details: [
       { label: "Name", value: "Teemu Taskula" },

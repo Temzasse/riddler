@@ -5,8 +5,8 @@ import Confetti from "react-confetti";
 import { styled } from "../styles/styled";
 import { Stack } from "./common";
 import Terminal, { TerminalRef } from "./Terminal";
-import annaAscii from "../assets/anna_ascii.png";
 import { useWindowSize } from "react-use";
+import { images } from "./images";
 
 const endingLines = [
   "Hello my love",
@@ -57,7 +57,7 @@ export default function Ending() {
         style={{ height: "100%" }}
         wrapperProps={{ style: { height: "100%" } }}
       >
-        <Ascii src={annaAscii} />
+        <Ascii src={images.anna} />
 
         <TerminalWrapper>
           <Terminal
