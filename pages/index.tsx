@@ -1,32 +1,19 @@
-import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import useSound from "use-sound";
 
 import Entry from "@components/Entry";
 import Intro from "@components/Intro";
 import Cases from "@components/Cases";
 import Ending from "@components/Ending";
-
-type Phase = "entry" | "intro" | "cases" | "ending";
+import { usePhases } from "@components/hooks";
 
 export default function Home() {
-  const [playBackgroundSound] = useSound("/background.mp3");
-  const [phase, setPhase] = useState<Phase>("cases");
-
-  function handleEntry() {
-    // playBackgroundSound();
-    setPhase("intro");
-  }
-
-  function handleIntro() {
-    setPhase("cases");
-  }
+  const { phase, onCasesDone, onEntryDone, onIntroDone } = usePhases();
 
   return (
     <AnimatePresence>
-      {phase === "entry" && <Entry onNext={handleEntry} />}
-      {phase === "intro" && <Intro onNext={handleIntro} />}
-      {phase === "cases" && <Cases />}
+      {phase === "entry" && <Entry onNext={onEntryDone} />}
+      {phase === "intro" && <Intro onNext={onIntroDone} />}
+      {phase === "cases" && <Cases onNext={onCasesDone} />}
       {phase === "ending" && <Ending />}
     </AnimatePresence>
   );

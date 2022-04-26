@@ -1,12 +1,45 @@
+import useSound from "use-sound";
+import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { useLocalStorage } from "react-use";
 
 import {
   CaseId,
+  Phase,
   cases as initialCases,
   knownWords as initialKnownWords,
 } from "./data";
-import { useEffect } from "react";
+
+export function usePhases() {
+  const [phase, setPhase] = useLocalStorage<Phase>("phase", "entry");
+  const [playBackgroundSound] = useSound("/background.mp3", {
+    loop: true,
+    interrupt: true,
+  });
+
+  function onEntryDone() {
+    playBackgroundSound();
+    setPhase("intro");
+  }
+
+  function onIntroDone() {
+    setPhase("cases");
+  }
+
+  function onCasesDone() {
+    setPhase("ending");
+  }
+
+  useEffect(() => {
+    // Replay background sound if page is reloaded accidentally
+    if (phase !== "entry") playBackgroundSound();
+
+    // @ts-ignore
+    window.resetPhase = () => setPhase("entry");
+  }, []);
+
+  return { phase, onEntryDone, onIntroDone, onCasesDone };
+}
 
 export function useCases() {
   const [persistedValue, setPersistedValue] = useLocalStorage("cases", initialCases); // prettier-ignore

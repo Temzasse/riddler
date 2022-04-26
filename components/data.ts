@@ -35,6 +35,8 @@ export type Line = {
   respondent: "killer" | "user";
 };
 
+export type Phase = "entry" | "intro" | "cases" | "ending";
+
 export const knownWords = ["a", "b", "c", "d"];
 
 export const cases: CaseInfo[] = [

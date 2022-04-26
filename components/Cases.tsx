@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { styled } from "@styles/styled";
@@ -8,7 +8,9 @@ import { Stack } from "./common";
 import CaseFile from "./CaseFile";
 import Terminal, { TerminalRef } from "./Terminal";
 
-type Props = {};
+type Props = {
+  onNext: () => void;
+};
 
 const casesLines = [
   "Are you as excited as I am?",
@@ -16,17 +18,20 @@ const casesLines = [
   "Each of them contains redacted information",
 ];
 
-export default function Cases({}: Props) {
+export default function Cases({ onNext }: Props) {
   const { cases, revealHint } = useCases();
   const { knownWords, removeKnownWord } = useKnownWords();
+  const [replyEnabled, setReplyEnabled] = useState(false);
   const terminalRef = useRef<TerminalRef>();
 
-  console.log({ knownWords, cases });
-
   function handleUserLineInsert(line: string) {
+    if (!replyEnabled) return;
+
     const [id, word] = line.split("=");
 
-    if (id && word && knownWords.includes(word)) {
+    if (id === "anaaliahven") {
+      onNext();
+    } else if (knownWords.includes(word)) {
       revealHint(id as CaseId);
       removeKnownWord(word);
       terminalRef.current?.reply("Very well done!");
@@ -53,6 +58,7 @@ export default function Cases({}: Props) {
             ref={terminalRef}
             killerLines={casesLines}
             onUserLineInserted={handleUserLineInsert}
+            onKillerLinesFinished={() => setReplyEnabled(true)}
           />
         </TerminalWrapper>
       </Stack>

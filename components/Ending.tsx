@@ -1,11 +1,11 @@
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Confetti from "react-confetti";
 
 import { styled } from "@styles/styled";
 import { asciiAnna } from "./data";
 import { Stack } from "./common";
-import Terminal from "./Terminal";
-import { useState } from "react";
+import Terminal, { TerminalRef } from "./Terminal";
 
 const endingLines = [
   "Hello my love",
@@ -15,8 +15,32 @@ const endingLines = [
   "Will you still marry me? (yes/no)",
 ];
 
+const wrongAnswers = [
+  "Wrong answer, please try again :)",
+  "You had a typo, please try again :)",
+  "Couldn't quite get that, please try again :)",
+  "Are you sure? Please try again :)",
+];
+
 export default function Ending() {
   const [showConfetti, setShowConfetti] = useState(false);
+  const [replyEnabled, setReplyEnabled] = useState(false);
+  const terminalRef = useRef<TerminalRef>();
+
+  function handleUserLineInsert(line: string) {
+    if (replyEnabled && !showConfetti) {
+      if (line === "yes") {
+        terminalRef.current?.reply(
+          "YES! I love you too! I will never let you go."
+        );
+        setShowConfetti(true);
+      } else {
+        const answer =
+          wrongAnswers[Math.floor(Math.random() * wrongAnswers.length)];
+        terminalRef.current?.reply(answer);
+      }
+    }
+  }
 
   return (
     <Wrapper
@@ -34,7 +58,12 @@ export default function Ending() {
         <Ascii>{asciiAnna}</Ascii>
 
         <TerminalWrapper>
-          <Terminal killerLines={endingLines} />
+          <Terminal
+            ref={terminalRef}
+            killerLines={endingLines}
+            onUserLineInserted={handleUserLineInsert}
+            onKillerLinesFinished={() => setReplyEnabled(true)}
+          />
         </TerminalWrapper>
       </Stack>
 

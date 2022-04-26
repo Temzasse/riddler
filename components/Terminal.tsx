@@ -1,3 +1,5 @@
+import { useWindupString } from "windups";
+
 import React, {
   forwardRef,
   useEffect,
@@ -5,8 +7,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-
-import { useWindupString } from "windups";
 
 import { styled } from "@styles/styled";
 import { Stack, Text } from "./common";
@@ -59,7 +59,9 @@ const Terminal = forwardRef(
 
     useEffect(() => {
       if (contentRef.current) {
-        contentRef.current.scrollTop = contentRef.current.scrollHeight;
+        requestAnimationFrame(() => {
+          contentRef.current.scrollTop = contentRef.current.scrollHeight;
+        });
       }
     }, [terminal.lines.length]);
 
