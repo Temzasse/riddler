@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-import { styled } from "@styles/styled";
+import { styled } from "../styles/styled";
 import { CaseId } from "./data";
 import { useCases, useKnownWords } from "./hooks";
 import { Stack } from "./common";

@@ -1,8 +1,7 @@
-import * as React from "react";
 import type { ComponentProps } from "react";
 import type { VariantProps } from "@stitches/react";
-import { styled } from "@styles/styled";
-import { themeProp } from "@styles/helpers";
+import { styled } from "../../styles/styled";
+import { themeProp } from "../../styles/helpers";
 
 type StackVariants = VariantProps<typeof StackRoot>;
 type StackProps = StackVariants &

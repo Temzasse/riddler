@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 
-import { styled } from "@styles/styled";
+import { styled } from "../styles/styled";
 import { Stack, Text } from "./common";
 import { Line } from "./data";
 
@@ -58,11 +58,11 @@ const Terminal = forwardRef(
     }, []);
 
     useEffect(() => {
-      if (contentRef.current) {
-        requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (contentRef.current) {
           contentRef.current.scrollTop = contentRef.current.scrollHeight;
-        });
-      }
+        }
+      });
     }, [terminal.lines.length]);
 
     return (
@@ -95,6 +95,7 @@ const Terminal = forwardRef(
               placeholder="Reply here..."
               autoCorrect="false"
               spellCheck="false"
+              autoFocus
             />
           </Stack>
         </TerminalForm>
@@ -103,7 +104,7 @@ const Terminal = forwardRef(
   }
 );
 
-const factor = 0.5; // edit for easier testing
+const factor = 1; // edit for easier testing
 const pace = 80 * factor;
 const delay = 2000 * factor;
 
@@ -155,7 +156,7 @@ function useTerminal({
   onKillerLinesFinished,
 }: {
   killerLines: string[];
-  onKillerLinesFinished: () => void;
+  onKillerLinesFinished?: () => void;
 }) {
   const [firstLine, ...otherLines] = useRef<Line[]>(
     killerLines.map((text) => ({

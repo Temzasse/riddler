@@ -1,5 +1,5 @@
-import { styled } from "@styles/styled";
-import { themeProp } from "@styles/helpers";
+import { styled } from "../../styles/styled";
+import { themeProp } from "../../styles/helpers";
 
 type Props = React.ComponentProps<typeof StyledText> & {
   as?: keyof JSX.IntrinsicElements;
@@ -18,10 +18,9 @@ export function Text(props: Props) {
 
 const variantToTag = {
   body: "p",
-  bodyStrong: "strong",
   bodySmall: "p",
-  quizTitle: "p",
-  quizTitleSmall: "p",
+  caseFile: "p",
+  caseFileTitle: "p",
   title1: "h1",
   title2: "h2",
   title3: "h3",

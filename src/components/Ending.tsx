@@ -2,10 +2,11 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Confetti from "react-confetti";
 
-import { styled } from "@styles/styled";
-import { asciiAnna } from "./data";
+import { styled } from "../styles/styled";
 import { Stack } from "./common";
 import Terminal, { TerminalRef } from "./Terminal";
+import annaAscii from "../assets/anna_ascii.png";
+import { useWindowSize } from "react-use";
 
 const endingLines = [
   "Hello my love",
@@ -26,6 +27,7 @@ export default function Ending() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [replyEnabled, setReplyEnabled] = useState(false);
   const terminalRef = useRef<TerminalRef>();
+  const dimensions = useWindowSize();
 
   function handleUserLineInsert(line: string) {
     if (replyEnabled && !showConfetti) {
@@ -55,7 +57,7 @@ export default function Ending() {
         style={{ height: "100%" }}
         wrapperProps={{ style: { height: "100%" } }}
       >
-        <Ascii>{asciiAnna}</Ascii>
+        <Ascii src={annaAscii} />
 
         <TerminalWrapper>
           <Terminal
@@ -67,8 +69,12 @@ export default function Ending() {
         </TerminalWrapper>
       </Stack>
 
-      {typeof window !== "undefined" && showConfetti && (
-        <Confetti colors={["#009688", "#4CAF50", "#2db818", "#8BC34A"]} />
+      {showConfetti && (
+        <Confetti
+          colors={["#009688", "#4CAF50", "#2db818", "#8BC34A"]}
+          width={dimensions.width}
+          height={dimensions.height}
+        />
       )}
     </Wrapper>
   );
@@ -79,11 +85,13 @@ const Wrapper = styled(motion.div, {
   height: "100%",
 });
 
-const Ascii = styled("div", {
-  whiteSpace: "pre",
-  fontSize: 7,
-  fontFamily: "monospace",
-  color: "$text",
+const Ascii = styled("img", {
+  flex: 1,
+  maxWidth: "40vw",
+  maxHeight: "80vh",
+  width: "100%",
+  height: "auto",
+  objectFit: "contain",
   alignSelf: "flex-end",
 });
 

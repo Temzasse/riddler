@@ -1,7 +1,4 @@
-import React from "react";
-import Image from "next/image";
-
-import { styled } from "@styles/styled";
+import { styled } from "../styles/styled";
 import { CaseInfo } from "./data";
 
 type Props = {
@@ -11,7 +8,7 @@ type Props = {
 export default function Polaroid({ img }: Props) {
   return (
     <Wrapper>
-      <Img src={img} width={400} height={400} />
+      <Img src={img} />
     </Wrapper>
   );
 }
@@ -26,7 +23,9 @@ const Wrapper = styled("div", {
   transform: "rotate(-2deg)",
 });
 
-const Img = styled(Image, {
+const Img = styled("img", {
+  width: "400px",
+  height: "400px",
   filter: "contrast(105%) brightness(105%) sepia(30%) grayscale(100%)",
   border: "1px solid rgba(0,0,0,0.5) !important",
 

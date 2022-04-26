@@ -1,7 +1,7 @@
 import React, { ComponentProps } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { styled, keyframes } from "@styles/styled";
+import { styled, keyframes } from "../styles/styled";
 
 type Props = ComponentProps<typeof DialogPrimitive.Content> & {
   css: any;

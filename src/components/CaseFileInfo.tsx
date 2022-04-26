@@ -1,6 +1,4 @@
-import React from "react";
-
-import { styled } from "@styles/styled";
+import { styled } from "../styles/styled";
 import { CaseInfo } from "./data";
 import { Stack, Text } from "./common";
 import Polaroid from "./Polaroid";
