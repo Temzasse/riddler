@@ -23,7 +23,7 @@ export type TerminalRef = {
 };
 
 const FACTOR = 1; // edit for easier testing
-const PACE = 70 * FACTOR;
+const PACE = 50 * FACTOR;
 const DELAY = 1500 * FACTOR;
 
 const Terminal = forwardRef(

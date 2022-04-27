@@ -2,22 +2,13 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { styled } from "../styles/styled";
+import { introAnswers, introLines } from "../common/data";
+import { getRandomFromArray } from "../common/utils";
 import Terminal, { TerminalRef } from "./Terminal";
 
 type Props = {
   onNext: () => void;
 };
-
-const introLines = [
-  "Hello",
-  "I've been waiting for you",
-  "I have some bad news for you",
-  "All your friends are... dead.",
-  "They have been mysteriously murdered...",
-  "...by me! :)",
-  "To gather your courage you need to drink a shot",
-  "After that, type 'anna' to start",
-];
 
 export default function Intro({ onNext }: Props) {
   const [replyEnabled, setReplyEnabled] = useState(false);
@@ -26,10 +17,10 @@ export default function Intro({ onNext }: Props) {
   function handleUserLineInsert(line: string) {
     if (!replyEnabled) return;
 
-    if (line === "anna") {
+    if (line.trim().toLowerCase() === "anna") {
       onNext();
     } else {
-      terminalRef.current?.reply("Are you scared?");
+      terminalRef.current?.reply(getRandomFromArray(introAnswers));
     }
   }
 

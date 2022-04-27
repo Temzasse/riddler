@@ -1,9 +1,16 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+import {
+  casesFinalWord,
+  casesLines,
+  casesNegativeAnswers,
+  casesPositiveAnswers,
+} from "../common/data";
+
 import type { CaseId } from "../common/types";
 import { useCases, useKnownWords } from "../common/hooks";
-import { casesLines } from "../common/data";
+import { getRandomFromArray } from "../common/utils";
 import { styled } from "../styles/styled";
 import { Stack } from "./common";
 import Terminal, { TerminalRef } from "./Terminal";
@@ -22,16 +29,16 @@ export default function Cases({ onNext }: Props) {
   function handleUserLineInsert(line: string) {
     if (!replyEnabled) return;
 
-    const [id, word] = line.toLowerCase().split("=");
+    const [id, word] = line.trim().toLowerCase().split("=");
 
-    if (id === "anaaliahven") {
+    if (id === casesFinalWord) {
       onNext();
     } else if (knownWords.includes(word) && cases.find((c) => c.id === id)) {
       revealHint(id as CaseId);
       removeKnownWord(word);
-      terminalRef.current?.reply("Very well done!");
+      terminalRef.current?.reply(getRandomFromArray(casesPositiveAnswers));
     } else {
-      terminalRef.current?.reply("I'm not impressed");
+      terminalRef.current?.reply(getRandomFromArray(casesNegativeAnswers));
     }
   }
 
