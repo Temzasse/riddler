@@ -17,6 +17,12 @@ window.resetGame = () => {
   window.location.reload();
 };
 
+// @ts-ignore
+window.resetCases = () => {
+  localStorage.removeItem(CASES_KEY);
+  window.location.reload();
+};
+
 export function usePhases() {
   const [phase, setPhase] = useLocalStorage<Phase>(PHASE_KEY, "intro");
 

@@ -1,18 +1,59 @@
 import type { CaseInfo } from "./types";
 import { images } from "./images";
 
-export const knownWords = ["a", "b", "c", "d"];
+export const knownWords = [
+  "aliquam",
+  "ante",
+  "dapibus",
+  "donec",
+  "erat",
+  "euismod",
+  "fames",
+  "feugiat",
+  "fusce",
+  "iaculis",
+  "integer",
+  "lacus",
+  "lectus",
+  "lorem",
+  "massa",
+  "mollis",
+  "montes",
+  "natoque",
+  "netus",
+  "nibh",
+  "nisi",
+  "non",
+  "nullam",
+  "ornare",
+  "platea",
+  "posuere",
+  "proin",
+  "purus",
+  "quisque",
+  "rhoncus",
+  "sem",
+  "semper",
+  "sodales",
+  "taciti",
+  "tempor",
+  "varius",
+  "veni",
+  "vici",
+  "vidi",
+  "vitae",
+];
 
 export const introLines = [
   "Hello 👋",
   "I've been waiting for you",
-  "I have some bad news for you",
+  "I have some bad news",
   "All your friends are... dead ☠️",
   "They have been mysteriously murdered...",
   "...by me! 😊",
   "I want to play a little game with you",
   "Before we start, take a shot to gather your courage 🥃",
-  "When you are ready, type 'anna' to start",
+  "When you are ready, type 'portugalilainen pornotähti' to start",
 ];
 
 export const introAnswers = [
@@ -23,13 +64,13 @@ export const introAnswers = [
 ];
 
 export const casesLines = [
-  "I have to confess one thing",
+  "I have to confess something",
   "The shot you drank was actually poison 😈",
-  "You have 15mins before you die, unless...",
-  "...you drink a potion every 15mins :)",
-  "Fun right? Okay now to the main event",
+  "You have 15 mins before you die, unless...",
+  "...you drink a potion every 15 mins :)",
+  "Fun right? Okay, now to the main event",
   "Here on the left you have cases that you need to solve",
-  "Each case file contains redacted information though",
+  "Each case file contains redacted information",
   "You need to obtain keywords to unlock the missing info",
   "You can use a keyword by typing 'name=keyword'",
   "This will reveal one redacted detail for that person",
@@ -37,7 +78,7 @@ export const casesLines = [
   "You'll find these keywords by going on quests",
   "A quest can be started by talking to a ghost",
   "Yes, your friends are ghosts now, boooooo! 👻",
-  "Each time you solve a case you'll receive a reward",
+  "Every time you solve a case you'll receive a reward",
   "Good luck! And remember to drink those potions 😉",
 ];
 
@@ -56,7 +97,7 @@ export const casesNegativeAnswers = [
   "What are you talking about?!",
   "You can do better",
   "I thought you were smart",
-  "Are you a school dropout?",
+  "Are you a high school dropout?",
   "Are you drunk?",
   "Are you even trying?!?",
   "Wrong, wrong, WRONG!!!",
@@ -68,9 +109,9 @@ export const endingLines = [
   "Hello my love ❤️",
   "Congratulations for solving all the murders!",
   "Now we can live together without any distractions 👰🏻‍♀️🤵🏻‍♂️",
-  "I hope you understand my motivations",
+  "I hope you understand my motives",
   "Will you still marry me? (yes/no)",
-  "PS: the poison was actually not poison",
+  "PS: the poison wasn't actually poison",
   "I would never kill my booboo 😘",
   "Back to the important question: you+me=forever?",
 ];
@@ -91,13 +132,13 @@ export const cases: CaseInfo[] = [
     name: "Jopu",
     details: [
       { label: "Name", value: "Joel Lappalainen" },
-      { label: "Age", value: "29" },
+      { label: "Occupation", value: "Student" },
       { label: "Aliases", value: "Gollum, Ikiteekkari" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
-      "Has complained about [eye sight] issues",
-      "Body had a strong [nail polish remover] smell",
+      "Joel's bank account shows multiple [4.99€ purchases].",
+      "His roommate tells that Joel has been studying the [Greek alphabet].",
+      "Last words from Joel were '[red stripes, I have all the red stripes]...'",
     ],
   },
   {
@@ -106,13 +147,13 @@ export const cases: CaseInfo[] = [
     name: "Jaakko",
     details: [
       { label: "Name", value: "Jaakko Kallio" },
-      { label: "Age", value: "28" },
+      { label: "Occupation", value: "Helicopter Pilot" },
       { label: "Aliases", value: "Ritari, Air Rambo" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
-      "Has complained about [eye sight] issues",
-      "Body had a strong [nail polish remover] smell",
+      "Everybody knows that Jaakko is a super fan of [Elon Musk].",
+      "Jaakko just bought a [used Tesla] from the black market.",
+      "Recent reports indicate that many [autopilot AIs] had been hacked.",
     ],
   },
   {
@@ -121,13 +162,13 @@ export const cases: CaseInfo[] = [
     name: "Ode",
     details: [
       { label: "Name", value: "Oskar Loisamo" },
-      { label: "Age", value: "29" },
+      { label: "Occupation", value: "Car Salesman" },
       { label: "Aliases", value: "Besserwisser, Mirri" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
-      "Has complained about [eye sight] issues",
-      "Body had a strong [nail polish remover] smell",
+      "Rumor has it that Ode recently [adopted a cat] from a swamp in Russia",
+      "Ode is strongly [anti-vax]",
+      "There are [many little bite marks] all over the body",
     ],
   },
   {
@@ -136,13 +177,13 @@ export const cases: CaseInfo[] = [
     name: "Meris",
     details: [
       { label: "Name", value: "Teemu Meriluoto" },
-      { label: "Age", value: "29" },
+      { label: "Occupation", value: "CEO of YIT" },
       { label: "Aliases", value: "Man of Steel, El Giganten" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
-      "Has complained about [eye sight] issues",
-      "Body had a strong [nail polish remover] smell",
+      "Meris has been involved in some [big building projects] which have been record breaking.",
+      "In this project Meris has been exposed to [infernal heat and he has only had access to alcoholic drinks].",
+      "Meris known for always being the [last person to leave a place].",
     ],
   },
   {
@@ -151,11 +192,11 @@ export const cases: CaseInfo[] = [
     name: "Lalli",
     details: [
       { label: "Name", value: "Lalli Myllyaho" },
-      { label: "Age", value: "20" },
+      { label: "Occupation", value: "Math Professor" },
       { label: "Aliases", value: "Bootleg Lalli, Benjamin Button" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
+      "Arrested for [manufacturing booze] at home",
       "Has complained about [eye sight] issues",
       "Body had a strong [nail polish remover] smell",
     ],
@@ -166,13 +207,13 @@ export const cases: CaseInfo[] = [
     name: "Henu",
     details: [
       { label: "Name", value: "Henri Höytiä" },
-      { label: "Age", value: "29" },
-      { label: "Aliases", value: "Kontulan Thanos, Asap Rocky" },
+      { label: "Occupation", value: "Professional Jyväjemmari" },
+      { label: "Aliases", value: "Kontulan Thanos, Asap Rock" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
-      "Has complained about [eye sight] issues",
-      "Body had a strong [nail polish remover] smell",
+      "There has been a bad [food shortage] in northern Finland",
+      "Henu was seen sitting still for a long time [with a rod in his hand] in overalls.",
+      "Vappu is almost here and Henu still [obsessively goes on the ice] every day.",
     ],
   },
   {
@@ -181,13 +222,13 @@ export const cases: CaseInfo[] = [
     name: "Andreas",
     details: [
       { label: "Name", value: "Andreas Urbanski" },
-      { label: "Age", value: "28" },
+      { label: "Occupation", value: "Renessance AI developer" },
       { label: "Aliases", value: "Ex Machina, Crypto Bro" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
-      "Has complained about [eye sight] issues",
-      "Body had a strong [nail polish remover] smell",
+      "The surveilance footage show that Andreas was [in his workshop] just before his death.",
+      "Police searched Andreas' house and found out that one [Japanese knife] was missing.",
+      "Latest news indicate that Andreas had managed to [create a new AI robot].",
     ],
   },
   {
@@ -196,13 +237,13 @@ export const cases: CaseInfo[] = [
     name: "Eeki",
     details: [
       { label: "Name", value: "Eerikki Pihlajamaa" },
-      { label: "Age", value: "29" },
+      { label: "Occupation", value: "UFC Warmup Act" },
       { label: "Aliases", value: "Siilitien Silva, Nelisilmä" },
     ],
     hints: [
-      "Arrested for [manufactoring booze] at home",
-      "Has complained about [eye sight] issues",
-      "Body had a strong [nail polish remover] smell",
+      "Eeki's friends had tried to [call his cell phone numerous times] every Monday, Wednesday and Friday evening.",
+      "Last time Eeki was seen he had some [gnarly marks around his neck and serious neck pain].",
+      "Eeki told you that he has been working on his [guillotine escapes]. Is this the French revolution?",
     ],
   },
   {
@@ -211,13 +252,13 @@ export const cases: CaseInfo[] = [
     name: "Tasse",
     details: [
       { label: "Name", value: "Teemu Taskula" },
-      { label: "Age", value: "30" },
+      { label: "Occupation", value: "Pixel Mover" },
       { label: "Aliases", value: "Mr Apple, Juhlamokka" },
     ],
     hints: [
-      "Was found covered in [Apple products] at work",
-      "Smart watch indicated two weeks [without sleeping] prior to death",
-      "Credit card bill showed [countless iPhone preorders]",
+      "The word says that Teemu had [invested all his money into] Netflix.",
+      "Milka has been spotted [moving in with some man called Herlin]",
+      "Witnesses say that Teemu was seen [talking to shady people in Piritori].",
     ],
   },
 ];

@@ -17,7 +17,7 @@ export default function Intro({ onNext }: Props) {
   function handleUserLineInsert(line: string) {
     if (!replyEnabled) return;
 
-    if (line.trim().toLowerCase() === "anna") {
+    if (line.trim().toLowerCase() === "portugalilainen pornotähti") {
       onNext();
     } else {
       terminalRef.current?.reply(getRandomFromArray(introAnswers));

@@ -75,7 +75,7 @@ const Wrapper = styled(motion.div, {
 const CasesGrid = styled("div", {
   flex: 1,
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
   gap: "$large",
   paddingLeft: "$xxxlarge",
   paddingVertical: "$xxxlarge",
