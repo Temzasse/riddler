@@ -280,6 +280,7 @@ const CursorSvg = styled("svg", {
 });
 
 const TerminalInput = styled("input", {
+  flex: 1,
   backgroundColor: "transparent",
   border: "none",
   outline: "none",
