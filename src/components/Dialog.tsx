@@ -1,13 +1,14 @@
-import React, { ComponentProps } from "react";
+import { ComponentProps, forwardRef } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
+
 import { styled, keyframes } from "../styles/styled";
 
 type Props = ComponentProps<typeof DialogPrimitive.Content> & {
   css: any;
 };
 
-export const DialogContent = React.forwardRef(
+export const DialogContent = forwardRef(
   ({ children, ...props }: Props, forwardedRef) => (
     <DialogPrimitive.Portal>
       <Overlay />

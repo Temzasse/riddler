@@ -8,9 +8,9 @@ import {
   useState,
 } from "react";
 
+import type { Line } from "../common/types";
 import { styled } from "../styles/styled";
 import { Stack, Text } from "./common";
-import { Line } from "./data";
 
 type Props = {
   killerLines: string[];

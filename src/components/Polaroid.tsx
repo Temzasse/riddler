@@ -1,5 +1,5 @@
+import type { CaseInfo } from "../common/types";
 import { styled } from "../styles/styled";
-import { CaseInfo } from "./data";
 
 type Props = {
   img: CaseInfo["img"];

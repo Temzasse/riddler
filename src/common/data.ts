@@ -1,33 +1,28 @@
+import type { CaseInfo } from "./types";
 import { images } from "./images";
 
-export type CaseId =
-  | "lalli"
-  | "tasse"
-  | "eeki"
-  | "jopu"
-  | "jaakko"
-  | "meris"
-  | "ode"
-  | "henu"
-  | "andreas";
-
-export type CaseInfo = {
-  id: CaseId;
-  name: string;
-  img: any;
-  details: Array<{ label: string; value: string }>;
-  hints: string[];
-};
-
-export type Line = {
-  id: string;
-  text: string;
-  respondent: "killer" | "user";
-};
-
-export type Phase = "intro" | "cases" | "ending";
-
 export const knownWords = ["a", "b", "c", "d"];
+
+export const casesLines = [
+  "Are you as excited as I am?",
+  "Here on the left you have all the cases you need to solve",
+  "Each of them contains redacted information",
+];
+
+export const endingLines = [
+  "Hello my love",
+  "Congratulations for solving all the murders",
+  "Now we can live together without any distractions",
+  "I hope you understand my motivations",
+  "Will you still marry me? (yes/no)",
+];
+
+export const endingWrongAnswers = [
+  "Wrong answer, please try again :)",
+  "You had a typo, please try again :)",
+  "Couldn't quite get that, please try again :)",
+  "Are you sure? Please try again :)",
+];
 
 export const cases: CaseInfo[] = [
   {

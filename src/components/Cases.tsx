@@ -1,22 +1,17 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+import type { CaseId } from "../common/types";
+import { useCases, useKnownWords } from "../common/hooks";
+import { casesLines } from "../common/data";
 import { styled } from "../styles/styled";
-import { CaseId } from "./data";
-import { useCases, useKnownWords } from "./hooks";
 import { Stack } from "./common";
-import CaseFile from "./CaseFile";
 import Terminal, { TerminalRef } from "./Terminal";
+import CaseFile from "./CaseFile";
 
 type Props = {
   onNext: () => void;
 };
-
-const casesLines = [
-  "Are you as excited as I am?",
-  "Here on the left you have all the cases you need to solve",
-  "Each of them contains redacted information",
-];
 
 export default function Cases({ onNext }: Props) {
   const { cases, revealHint } = useCases();
@@ -27,11 +22,11 @@ export default function Cases({ onNext }: Props) {
   function handleUserLineInsert(line: string) {
     if (!replyEnabled) return;
 
-    const [id, word] = line.split("=");
+    const [id, word] = line.toLowerCase().split("=");
 
     if (id === "anaaliahven") {
       onNext();
-    } else if (knownWords.includes(word)) {
+    } else if (knownWords.includes(word) && cases.find((c) => c.id === id)) {
       revealHint(id as CaseId);
       removeKnownWord(word);
       terminalRef.current?.reply("Very well done!");

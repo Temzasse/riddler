@@ -1,27 +1,14 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useWindowSize } from "react-use";
 import Confetti from "react-confetti";
 
 import { styled } from "../styles/styled";
+import { images } from "../common/images";
+import { getRandomFromArray } from "../common/utils";
+import { endingLines, endingWrongAnswers } from "../common/data";
 import { Stack } from "./common";
 import Terminal, { TerminalRef } from "./Terminal";
-import { useWindowSize } from "react-use";
-import { images } from "./images";
-
-const endingLines = [
-  "Hello my love",
-  "Congratulations for solving all the murders",
-  "Now we can live together without any distractions",
-  "I hope you understand my motivations",
-  "Will you still marry me? (yes/no)",
-];
-
-const wrongAnswers = [
-  "Wrong answer, please try again :)",
-  "You had a typo, please try again :)",
-  "Couldn't quite get that, please try again :)",
-  "Are you sure? Please try again :)",
-];
 
 export default function Ending() {
   const [showConfetti, setShowConfetti] = useState(false);
@@ -37,9 +24,7 @@ export default function Ending() {
         );
         setShowConfetti(true);
       } else {
-        const answer =
-          wrongAnswers[Math.floor(Math.random() * wrongAnswers.length)];
-        terminalRef.current?.reply(answer);
+        terminalRef.current?.reply(getRandomFromArray(endingWrongAnswers));
       }
     }
   }

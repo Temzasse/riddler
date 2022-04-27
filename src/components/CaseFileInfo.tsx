@@ -1,5 +1,5 @@
+import type { CaseInfo } from "../common/types";
 import { styled } from "../styles/styled";
-import { CaseInfo } from "./data";
 import { Stack, Text } from "./common";
 import Polaroid from "./Polaroid";
 import RedactedText from "./RedactedText";

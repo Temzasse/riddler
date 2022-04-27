@@ -19,3 +19,7 @@ export function preloadImages(urls: string[]) {
     }
   });
 }
+
+export function getRandomFromArray(arr: any[]) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}

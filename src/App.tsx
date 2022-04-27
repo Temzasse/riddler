@@ -2,8 +2,8 @@ import useSound from "use-sound";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
-import backgroundSound from "./background.mp3";
-import { usePhases } from "./components/hooks";
+import backgroundSound from "./assets/background.mp3";
+import { usePhases } from "./common/hooks";
 import Entry from "./components/Entry";
 import Intro from "./components/Intro";
 import Cases from "./components/Cases";
@@ -19,7 +19,7 @@ export default function App() {
   });
 
   function handleEntryDone() {
-    playBackgroundSound();
+    // playBackgroundSound();
     setEntered(true);
   }
 

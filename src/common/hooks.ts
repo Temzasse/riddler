@@ -2,12 +2,8 @@ import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { useLocalStorage } from "react-use";
 
-import {
-  CaseId,
-  Phase,
-  cases as initialCases,
-  knownWords as initialKnownWords,
-} from "./data";
+import type { CaseId, Phase } from "./types";
+import { cases as initialCases, knownWords as initialKnownWords } from "./data";
 
 const PHASE_KEY = "@riddler/phase";
 const WORDS_KEY = "@riddler/words";
