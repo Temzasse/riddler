@@ -33,10 +33,12 @@ export const casesLines = [
   "You need to obtain keywords to unlock the missing info",
   "You can use a keyword by typing 'name=keyword'",
   "This will reveal one redacted detail for that person",
+  "Each keyword can be used only once",
   "You'll find these keywords by going on quests",
   "A quest can be started by talking to a ghost",
   "Yes, your friends are ghosts now, boooooo! 👻",
-  "Good luck!",
+  "Each time you solve a case you'll receive a reward",
+  "Good luck! And remember to drink those potions 😉",
 ];
 
 export const casesPositiveAnswers = [
