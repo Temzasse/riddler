@@ -19,7 +19,7 @@ export default function App() {
   });
 
   function handleEntryDone() {
-    // playBackgroundSound();
+    playBackgroundSound();
     setEntered(true);
   }
 
