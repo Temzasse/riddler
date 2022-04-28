@@ -77,7 +77,7 @@ export const casesLines = [
   "You'll find these keywords by going on quests",
   "A quest can be started by talking to a ghost",
   "Yes, your friends are ghosts now, boooooo! 👻",
-  "Every time you solve a case you'll receive a reward",
+  "Find the first ghost to start your adventure",
   "Good luck! And remember to drink those potions 😉",
 ];
 
