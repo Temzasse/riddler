@@ -49,8 +49,7 @@ export const introLines = [
   "I've been waiting for you",
   "I have some bad news",
   "All your friends are... dead ☠️",
-  "They have been mysteriously murdered...",
-  "...by me! 😊",
+  "They have all been killed in mysterious circumstances",
   "I want to play a little game with you",
   "Before we start, take a shot to gather your courage 🥃",
   "When you are ready, type 'portugalilainen pornotähti' to start",
@@ -108,12 +107,14 @@ export const casesFinalWord = "anaaliahven";
 export const endingLines = [
   "Hello my love ❤️",
   "Congratulations for solving all the murders!",
+  "I had no other option",
+  "Your friends were getting in the way of our happiness",
   "Now we can live together without any distractions 👰🏻‍♀️🤵🏻‍♂️",
   "I hope you understand my motives",
   "Will you still marry me? (yes/no)",
   "PS: the poison wasn't actually poison",
   "I would never kill my booboo 😘",
-  "Back to the important question: you+me=forever?",
+  "Back to the important question: you+me=forever? 💍",
 ];
 
 export const endingWrongAnswers = [
