@@ -151,8 +151,8 @@ export const cases: CaseInfo[] = [
       { label: "Aliases", value: "Ritari, Air Rambo" },
     ],
     hints: [
-      "Everybody knows that Jaakko is a super fan of [Elon Musk].",
-      "Jaakko just bought a [used Tesla] from the black market.",
+      "People say that Jaakko has been [looking for a new car].",
+      "Jaakko just bought a [fake Tesla] from the black market.",
       "Recent reports indicate that many [autopilot AIs] had been hacked.",
     ],
   },
@@ -212,7 +212,7 @@ export const cases: CaseInfo[] = [
     ],
     hints: [
       "There has been a bad [food shortage] in northern Finland",
-      "Henu was seen sitting still for a long time [with a rod in his hand] in overalls.",
+      "Henu was seen [sitting still] for a long time.",
       "Vappu is almost here and Henu still [obsessively goes on the ice] every day.",
     ],
   },
@@ -242,7 +242,7 @@ export const cases: CaseInfo[] = [
     ],
     hints: [
       "Eeki's friends had tried to [call his cell phone numerous times] every Monday, Wednesday and Friday evening.",
-      "Last time Eeki was seen he had some [gnarly marks around his neck and serious neck pain].",
+      "Last time Eeki was seen he had some gnarly [marks around his neck and serious neck] pain.",
       "Eeki told you that he has been working on his [guillotine escapes]. Is this the French revolution?",
     ],
   },
@@ -258,7 +258,7 @@ export const cases: CaseInfo[] = [
     hints: [
       "The word says that Teemu had [invested all his money into] Netflix.",
       "Milka has been spotted [moving in with some man called Herlin]",
-      "Witnesses say that Teemu was seen [talking to shady people in Piritori].",
+      "Witnesses say that Teemu was seen [talking to shady people in Vaasanaukio].",
     ],
   },
 ];
