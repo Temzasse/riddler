@@ -13,25 +13,32 @@ export default function RedactedText({ children }: { children: string }) {
 
   return (
     <Text variant="caseFile" color="caseFileText">
-      {redacted.split("").map((char, i) => (
-        <HintChar key={`${char}-${i}`} redacted={char === "*"}>
-          {char === " " ? "\xa0" : char}
-        </HintChar>
-      ))}
+      {redacted.split(" ").map((word, wi) =>
+        word.includes("*") ? (
+          word.split("").map((char, ci) => (
+            <HintChar
+              key={`${char}-${ci}`}
+              style={{ marginRight: ci === word.length - 1 ? 6 : 0 }}
+            >
+              {char}
+            </HintChar>
+          ))
+        ) : (
+          <HintWord key={`${word}-${wi}`}>{word}</HintWord>
+        )
+      )}
     </Text>
   );
 }
 
+const HintWord = styled("span", {
+  display: "inline-block",
+  marginRight: "6px",
+});
+
 const HintChar = styled("span", {
   display: "inline-block",
-  variants: {
-    redacted: {
-      true: {
-        backgroundColor: "$background",
-        color: "transparent",
-        minWidth: "12px",
-      },
-      false: {},
-    },
-  },
+  backgroundColor: "$background",
+  color: "transparent",
+  minWidth: "12px",
 });

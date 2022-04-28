@@ -23,6 +23,18 @@ window.resetCases = () => {
   window.location.reload();
 };
 
+// @ts-ignore
+window.resetWords = () => {
+  localStorage.removeItem(WORDS_KEY);
+  window.location.reload();
+};
+
+// @ts-ignore
+window.resetPhase = () => {
+  localStorage.removeItem(PHASE_KEY);
+  window.location.reload();
+};
+
 export function usePhases() {
   const [phase, setPhase] = useLocalStorage<Phase>(PHASE_KEY, "intro");
 
