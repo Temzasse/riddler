@@ -136,7 +136,7 @@ export const cases: CaseInfo[] = [
       { label: "Aliases", value: "Gollum, Ikiteekkari" },
     ],
     hints: [
-      "Joel's bank account shows multiple [4.99€ purchases].",
+      "Joel's bank account shows multiple [5.6€ purchases].",
       "His roommate tells that Joel has been studying the [Greek alphabet].",
       "Last words from Joel were '[red stripes, I have all the red stripes]...'",
     ],
@@ -182,8 +182,8 @@ export const cases: CaseInfo[] = [
     ],
     hints: [
       "Meris has been involved in some [big building projects] which have been record breaking.",
-      "In this project Meris has been exposed to [infernal heat and he has only had access to alcoholic drinks].",
-      "Meris known for always being the [last person to leave a place].",
+      "In this project Meris has been exposed to [infernal heat] and he has only had access to alcoholic drinks.",
+      "Meris is known for always being the [last person to leave a place].",
     ],
   },
   {

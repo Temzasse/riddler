@@ -10,7 +10,11 @@ import { endingLines, endingWrongAnswers } from "../common/data";
 import { Stack } from "./common";
 import Terminal, { TerminalRef } from "./Terminal";
 
-export default function Ending() {
+type Props = {
+  onWin: () => void;
+};
+
+export default function Ending({ onWin }: Props) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [replyEnabled, setReplyEnabled] = useState(false);
   const terminalRef = useRef<TerminalRef>();
@@ -23,6 +27,7 @@ export default function Ending() {
           "YES! I love you too! I will never let you go."
         );
         setShowConfetti(true);
+        onWin();
       } else {
         terminalRef.current?.reply(getRandomFromArray(endingWrongAnswers));
       }
